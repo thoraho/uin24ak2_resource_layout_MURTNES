@@ -43,18 +43,22 @@ nav ul li{
 
 main{
     display: flex;
-    min-height: 250px;
     flex-direction: column;
     padding: 5rem;
     background-color: var(--white);
 }
 
 main h2{
-    color: var(--darkBlue)
+    color: var(--darkBlue);
+    margin: 0;
 }
 
 main p{
     max-width: 90%;
+}
+
+main ul{
+    margin: 0;
 }
 
 main a{

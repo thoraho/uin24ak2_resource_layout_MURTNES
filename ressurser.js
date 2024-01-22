@@ -102,7 +102,6 @@ const activeButton = document.getElementById('activeButton')
 activeButton.style.backgroundColor = "var(--white)"
 activeButton.style.color = "var(--darkBlue)"
 
-
 btnArray.forEach(btn => {
     btn.addEventListener("click", () => {
         btnArray.forEach(otherBtn => {
@@ -113,12 +112,13 @@ btnArray.forEach(btn => {
         btn.style.backgroundColor = "var(--white)"
         btn.style.color = "var(--darkBlue)"
         displayInfo(btn.textContent)
+        // https://developer.mozilla.org/en-US/docs/Web/API/Node/textContent
     })
 })
 
 function displayInfo(category) {
     let infoHTML = ""
-    const filteredInfo = resources.filter(res => res.category.toUpperCase() === category.toUpperCase())
+    const filteredInfo = resources.filter(res => res.category === category)
     console.log(filteredInfo)
     filteredInfo.map(info => {
         infoHTML += `<h2>${info.category}</h2>
