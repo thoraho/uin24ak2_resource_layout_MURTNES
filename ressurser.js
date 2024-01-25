@@ -110,7 +110,7 @@ function updateButtons(activeButton) {
             btn.classList.remove("active")
         }
         btn.addEventListener("click", () => {
-            //Kaller på updateUI med det tekstlige innholdet i knappen som er trykket. Dette, sammen med filtreringen i updateUI gir muligheten til å legge til flere objekter i arrayen og hente frem riktig informasjon.
+            //Kaller på updateUI med det tekstlige innholdet i knappen som er trykket som parameter.
             updateUI(btn.textContent)
         })
     })
@@ -129,7 +129,7 @@ function updateUI(category) {
     })
     //Går gjennom den filtrerte arrayen
     filteredInfo.map(info => {
-        //For hvert av de filtrerte objektene i arrayen, basert på parameteren som sendes med, skal det skrives ut riktig HTML-struktur til variablene infoHTML
+        //For hvert av de filtrerte objektene i arrayen, basert på parameteren som sendes med, skal det skrives ut riktig HTML-struktur til variabelen infoHTML
         infoHTML = `<h2>${info.category}</h2>
         <p>${info.text}.</p>
         <ul>`
