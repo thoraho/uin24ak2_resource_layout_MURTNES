@@ -95,42 +95,56 @@ const resources = [
     },
 ]
 
-const menuBtns = document.getElementsByClassName("menubutton")
-const btnArray = Array.from(menuBtns)
-
-const activeButton = document.getElementById('activeButton')
-activeButton.style.backgroundColor = "var(--white)"
-activeButton.style.color = "var(--darkBlue)"
-
-btnArray.forEach(btn => {
-    btn.addEventListener("click", () => {
-        btnArray.forEach(otherBtn => {
-            otherBtn.style.backgroundColor = "var(--darkBlue)"
-            otherBtn.style.color = "var(--white)"
+function updateButtons(activeButton) {
+    //Gjør om menyknappene til en array så jeg kan utnytte array-egenskaper videre.
+    const btnArray = Array.from(document.getElementsByClassName("menubutton"))
+    console.log(btnArray)
+    btnArray.map((btn) => {
+        //Hvis knappen som er trykket har samme verdi som parameteren som er sendt med skal klassen "active" legges til eller fjernes.
+        if (btn.textContent === activeButton) {
+            //Da det virker som the er oppdatering av siden som er problemet, la jeg til setTimeout for å prøve å løse problemet med CSS-transitioneffekten. Det løste det kun 50% da knappestyling ikke "easer" UT riktig.
+            setTimeout(() => {
+                btn.classList.add("active")
+            }, 1)
+        } else {
+            btn.classList.remove("active")
+        }
+        btn.addEventListener("click", () => {
+            //Kaller på updateUI med det tekstlige innholdet i knappen som er trykket. Dette, sammen med filtreringen i updateUI gir muligheten til å legge til flere objekter i arrayen og hente frem riktig informasjon.
+            updateUI(btn.textContent)
         })
-
-        btn.style.backgroundColor = "var(--white)"
-        btn.style.color = "var(--darkBlue)"
-        displayInfo(btn.textContent)
-        // https://developer.mozilla.org/en-US/docs/Web/API/Node/textContent
     })
-})
+}
 
-function displayInfo(category) {
+//Funksjon for å oppdatere visning av menypunkter og hovedinnhold.
+function updateUI(category) {
+    //Gjør klar tomme variabler for å senere kunne lagre HTML-struktur i. 
+    let menuHTML = ""
     let infoHTML = ""
+    //Filtrerer arrayen resources basert på parameteren som sendes med funksjonen, dette for å kunne vise riktig innhold etter hvilken fane som er valgt.
     const filteredInfo = resources.filter(res => res.category === category)
-    console.log(filteredInfo)
+    resources.map(item => {
+        //For hver av objektene i arrayen skal riktig HTML-struktur lagres i variabelen menuHTML
+        menuHTML += `<li><button class="menubutton">${item.category}</button></li>`
+    })
+    //Går gjennom den filtrerte arrayen
     filteredInfo.map(info => {
-        infoHTML += `<h2>${info.category}</h2>
+        //For hvert av de filtrerte objektene i arrayen, basert på parameteren som sendes med, skal det skrives ut riktig HTML-struktur til variablene infoHTML
+        infoHTML = `<h2>${info.category}</h2>
         <p>${info.text}.</p>
         <ul>`
+        //Går gjennom andre nivå av array.
         info.sources.map(links => {
             infoHTML +=
                 `<li><a href="${links.url}">${links.title}</a></li>`
         })
         infoHTML += `</ul>`
     })
+    //Skriver ut HTML-strukturen som er lagret i variabelene infoHTML og menuHTML til HTML-element med tilhørende IDer.
     document.getElementById("main").innerHTML = infoHTML
+    document.getElementById("menu").innerHTML = menuHTML
+    //Oppdaterer knappevisning med den samme parameteren som er sendt med til updateUI.
+    updateButtons(category)
 }
-
-displayInfo('HTML')
+//Kaller på updateUI med verdien fra den første category-key som utgangspunkt for å sørge for at siden lastes med innhold fra første objektet i arrayen.
+updateUI(resources[0].category)

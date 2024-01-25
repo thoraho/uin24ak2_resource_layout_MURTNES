@@ -1,13 +1,17 @@
+/* Importerer fonten "Montserrat" fra Google Fonts */
 @import url('https://fonts.googleapis.com/css2?family=Montserrat:wght@400;600;700&display=swap');
 
+/* Lager variabler for farger og teksttykkelse */
 :root {
     --darkBlue: #2A324B;
     --lightBlue: #58699D;
     --blueGrey: #E1E5EE;
     --white: #FFFFFF;
 
+    --fontBold: 900;
 }
 
+/* Stilregler for hele siden, bruker flex på body for å enkelt kunne midtstille hovedinnhold og navigasjon */
 body {
     display: flex;
     justify-content: center;
@@ -16,51 +20,58 @@ body {
     background-color: var(--blueGrey);
     height: 100dvh;
 }
-
-
-nav ul{
-    display: flex;
-    justify-content: space-between;
-    padding: 0;
-    margin: 0;
-    flex-wrap: wrap ;
-}
-
-nav ul li{
-    list-style: none;
-    background-color: var(--darkBlue);
-    color: var(--white);
-    padding: 1.5rem 4.5rem;
-    font-weight: 700;
-    cursor: pointer;
-    transition: color .2s ease-in-out, background-color .2s ease-in-out;
-}
-
-#container{
+/* Stilregler for container som holder på nav og main */
+#container {
     width: 100%;
     max-width: 1200px;
 }
 
-main{
+/* Stilregler for navigasjon */
+nav ul {
+    list-style: none;/* Fjerner punktliste-stil på listepunktene */
+    display: flex;
+    justify-content: space-between;
+    padding: 0;
+    margin: 0;
+    flex-wrap: wrap;
+}
+/* Stilregler for knappene i <li>-elementene */
+.menubutton {
+    border: none; /* Fjerner standard border for <button>-element */
+    background-color: var(--darkBlue);
+    color: var(--white);
+    padding: 1.5rem 4.5rem;
+    font-weight: var(--fontBold);
+    font-size: 1rem;
+    cursor: pointer;
+    transition: background-color .1s ease-in-out, color .1s ease-in-out; /* Denne fungerer halvveis */
+}
+
+.menubutton.active {
+    background-color: var(--white);
+    color: var(--darkBlue);
+}
+/* Hovedområde */
+main {
     display: flex;
     flex-direction: column;
     padding: 5rem;
     background-color: var(--white);
 }
 
-main h2{
+main h2 {
     color: var(--darkBlue);
     margin: 0;
 }
 
-main p{
+main p {
     max-width: 90%;
 }
 
-main ul{
+main ul {
     margin: 0;
 }
 
-main a{
+main a {
     color: var(--lightBlue);
 }
